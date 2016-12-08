@@ -3,9 +3,9 @@ package Circe
 import io.circe.generic.auto._
 import io.circe.parser._
 import io.circe.syntax._
-import io.circe.{ACursor, HCursor, Json}
+import io.circe._
 import io.circe.literal._
-
+import io.circe.generic.JsonCodec, io.circe.syntax._
 /**
   * Created by malinee on 1/12/2559.
   */
@@ -13,8 +13,7 @@ import io.circe.literal._
 case class MyPerson(firstName: String, lastName: String, age: Int)
 object Circe extends App {
 
-  //implicit val myPersonDecoder: Decoder[MyPerson] = deriveDecoder
- // implicit val myPersonEncoder: Encoder[MyPerson] = deriveEncoder
+
 
   val rawJson: String = """{"firstName":"Leonard ","lastName":"Nimoy","age":81}"""
 
@@ -52,6 +51,37 @@ object Circe extends App {
   val trimName: ACursor = cursor.downField("firstName").withFocus(_.mapString(_.trim))
   println(trimName.top.get)
 
+   case class Address(street: String, city: String)
+   case class Child(name: String, age: Int, birthdate: Option[java.util.Date])
+   case class SimplePerson(name: String, address: Address, children: List[Child])
+
+ // implicit val simplePersonDecoder: Decoder[SimplePerson] = deriveDecoder
+ // implicit val simplePersonEncoder: Encoder[SimplePerson] = deriveEncoder
+//
+//  val testJson =
+//    """
+//{ "name": "joe",
+//  "address": {
+//    "street"": "Bulevard",
+//    "city": "Helsinki""
+//  },
+//  "children": [
+//    {
+//      "name": "Mary",
+//      "age": 5,
+//      "birthdate": "2004-09-04T18:06:22Z"
+//    },
+//    {
+//      "name": "Mazy",
+//      "age": 3
+//    }
+//  ]
+//}
+//    """"
+//
+//  println(decode[SimplePerson](testJson))
+
+
 
 
 }
@@ -62,10 +92,10 @@ object Hierachy extends App {
   case class Fish(weight: Double) extends Animal
   case class Animals(animals: List[Animal])
 
-  val animals =  Animals(List(Fish(2.2),Dog("bobby")))
-  println(animals.asJson)
-  val dog = ("pluto")
-  println(dog.asJson)
+//  val animals =  Animals(List(Fish(2.2),Dog("bobby")))
+//  println(animals.asJson)
+//  val dog = ("pluto")
+//  println(dog.asJson)
   //de(dog.asJson)
 }
 

@@ -90,17 +90,6 @@ object Lift extends App {
   println(Extraction.unflatten( Extraction.flatten(testJson)))
 
 
-
-//  trait Animal
-//  case class Dog(name: String) extends Animal
-//  case class Cat(age: Int) extends Animal
-//
-//  implicit val formatss = Serialization.formats(ShortTypeHints(List(classOf[Dog])))
-//  val dogJson = parse("""{"Dog":{"name":"Bobby"}}""")
-//
-//
-//  println(read[Animal]("""{"Dog":{"name":"Bobby"}}"""))
-
 }
 
 sealed trait Animal
