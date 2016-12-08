@@ -37,7 +37,8 @@ libraryDependencies ++= {
     "com.typesafe.play" %% "play-json" % "2.5.0",
     "net.liftweb" %% "lift-json" % "2.6.2",
     "org.julienrf" %% "play-json-derived-codecs" % "3.3",
-    "io.leonard" %% "play-json-traits" % "1.0.1"
+    "io.leonard" %% "play-json-traits" % "1.0.1",
+
   )
 }
 
