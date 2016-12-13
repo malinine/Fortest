@@ -1,6 +1,5 @@
 package Lift
 
-import java.util.Date
 
 import net.liftweb.json._
 import net.liftweb.json.JsonDSL._
@@ -11,7 +10,6 @@ import net.liftweb.json
 /**
   * Created by malinee on 1/12/2559.
   */
-
 case class MyPerson(firstName: String, lastName: String, age: Int)
 
 object Lift extends App {
@@ -56,8 +54,7 @@ object Lift extends App {
 
   println("##### Extract nested class #####")
   case class Address(street: String, city: String)
-  case class Child(name: String, age: Int, birthdate: Option[java.util.Date])
-
+  case class Child(name: String, age: Int, birthdate: Option[java.time.Instant])
   case class SimplePerson(name: String, address: Address,children: List[Child])
 
 
@@ -82,6 +79,8 @@ object Lift extends App {
 
 
   println(testJson.extract[SimplePerson])
+
+  println((testJson \\ "children")(0))
 
   println("##### Flatten JSON #####")
   println(Extraction.flatten(testJson))
@@ -110,6 +109,7 @@ object Hierachy extends App {
 //  println(parse(ser).extract[Animals])
 
   val doggy = write(Dog("pluto"))
+  println(doggy.getBytes())
  // val doggy = """{"jsonClass":"Dog","name":"pluto"}"""
 
   val jdoggy = """{"Dog":"aaaa"}"""

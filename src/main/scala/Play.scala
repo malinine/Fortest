@@ -65,6 +65,9 @@ object Play extends App {
     )
   )
 
+  println("### flatten ###")
+ println( (json \\ "residents").flatMap(_.asOpt[List[String]]).flatten)
+
   println("##### Traversing #####")
   println((json \ "residents")(0).get)
   println(((json \ "residents")(0) \ "age").get)
@@ -97,6 +100,9 @@ object Play extends App {
 }
     """
 
+
+  println((Json.parse(testJson) \ "children").get)
+
   println("##### Extract nested class #####")
   case class Person(name: String, address: Address, children: List[Child])
   case class Address(street: String, city: String)
@@ -104,26 +110,26 @@ object Play extends App {
 
   case class SimplePerson(name: String, address: Address, children: List[Child])
 
-//  implicit val ChildRead: Reads[Child] = (
-//    (__ \ "name").read[String] and
-//      (__ \ "age").read[Int] and
-//       (__ \ "birthdate").readNullable[java.util.Date]
-//    )(Child)
-//
-//  implicit val AddressRead: Reads[Address] = (
-//    (__ \ "street").read[String] and
-//      (__ \ "city").read[String]
-//    )(Address)
-//
-//  implicit val SimplePersonRead: Reads[SimplePerson] = (
-//    (__ \ "name").read[String] and
-//      (__ \ "address").read[Address] and
-//        (__ \ "children").read[List[Child]]
-//    )(SimplePerson)
+  implicit val ChildRead: Reads[Child] = (
+    (__ \ "name").read[String] and
+      (__ \ "age").read[Int] and
+       (__ \ "birthdate").readNullable[java.util.Date]
+    )(Child.apply _)
 
-  implicit val childReads = Json.reads[Child]
-  implicit val addressReads = Json.reads[Address]
-  implicit val simplePersonReads = Json.reads[SimplePerson]
+  implicit val AddressRead: Reads[Address] = (
+    (__ \ "street").read[String] and
+      (__ \ "city").read[String]
+    )(Address.apply _)
+
+  implicit val SimplePersonRead: Reads[SimplePerson] = (
+    (__ \ "name").read[String] and
+      (__ \ "address").read[Address] and
+        (__ \ "children").read[List[Child]]
+    )(SimplePerson.apply _)
+
+//  implicit val childReads = Json.reads[Child]
+//  implicit val addressReads = Json.reads[Address]
+//  implicit val simplePersonReads = Json.reads[SimplePerson]
 
   println(Json.parse(testJson).as[SimplePerson])
   val jsonToModel = Json.parse(testJson).as[SimplePerson]
@@ -157,6 +163,7 @@ object Play extends App {
   implicit val simplePersontWrites = Json.writes[SimplePerson]
 
   val modelToJson = Json.toJson(jsonToModel)
+
   println(modelToJson)
 
 
@@ -191,6 +198,7 @@ object Leonard extends App {
   val doggy = Dog("Woof!")
   val animalFormat = traitFormat[Animal] << format[Dog] << format[Fish]
   val doggyJson = animalFormat.writes(doggy)
+  println(doggyJson)
   println(animalFormat.writes(doggy))
 
   //val ss = Json.parse("""{"s":"Woof!","type":"Dog"}""")

@@ -1,14 +1,15 @@
 package Circe
 
-import java.util.Date
 
+import cats.syntax.either._
+import java.time.Instant
 import io.circe.generic.auto._
 import io.circe.parser._
 import io.circe._
-import io.circe.literal._
-import io.circe.generic.JsonCodec
+
 import io.circe.syntax._
 import io.circe.optics.JsonPath._
+
 
 /**
   * Created by malinee on 1/12/2559.
@@ -42,35 +43,27 @@ object Circe extends App {
   println(delField.top.get)
 
   println("##### Add field #####")
- // println(parse(rawJson).right.get).deepMerge(parse(rawJson).right.get))
-  //Json.fromJsonObject(parse(rawJson).right.get)
   println(parse(rawJson).right.get.deepMerge(parse("""{"NickName":"A"}""").right.get))
-  //cursor.last.
-//  val a1: Json = json"""[{"id": 1}, {"id": 2}, {"id": 3}]"""
-//  val a2: Json = json"""[{"id": 4}, {"id": 5}, {"id": 6}]"""
 
-//  println(a1.deepMerge(a2))
-//
-//  val jmerge =  for {
-//    a1s <- a1.asArray;
-//    a2s <- a2.asArray
-//  } yield Json.fromValues(a1s++a2s)
-//  println(jmerge)
 
   println("##### trim field #####")
   val trimName: ACursor = cursor.downField("firstName").withFocus(_.mapString(_.trim))
   println(trimName.top.get)
 
+
   println("#### Nested case class ####")
    case class Address(street: String, city: String)
-   case class Child(name: String, age: Int, birthdate: Option[java.util.Date])
+   case class Child(name: String, age: Int, birthDate: Option[java.time.Instant])
    case class SimplePerson(name: String, address: Address, children: List[Child])
 
+  implicit val encodeInstant: Encoder[Instant] = Encoder.encodeString.contramap[Instant](_.toString)
+  implicit val decodeInstant: Decoder[Instant] = Decoder.decodeString.emap { str => Either.catchNonFatal(Instant.parse(str)).leftMap(t => "Instant") }
 
-  val personObj = SimplePerson("joe",Address("Bulevard","Helsinki"),List(Child("Mazy",3,Option(new Date()))))
-  println(personObj.asJson)
 
-
+//  val personObj = SimplePerson("joe",Address("Bulevard","Helsinki"),List(Child("Mazy",3,Some(new Date()))))
+//  println(personObj.asJson)
+//
+//
   val testJson =
     """
 { "name": "joe",
@@ -81,7 +74,8 @@ object Circe extends App {
   "children": [
     {
       "name": "Mary",
-      "age": 5
+      "age": 5,
+      "birthdate": "12345678L"
     },
     {
       "name": "Mazy",
@@ -90,7 +84,7 @@ object Circe extends App {
   ]
 }"""
 
-  //println(decode[SimplePerson](testJson))
+  println(decode[SimplePerson](testJson))
 
 
 
@@ -105,8 +99,10 @@ object Hierachy extends App {
 
 //  val animals =  Animals(List(Fish(2.2),Dog("bobby")))
 //  println(animals.asJson)
-  val dog = ("pluto")
-  println(dog.asJson)
+  val dog = Dog("pluto")
+  println(dog)
   decode[Animal](dog.asJson.toString())
+  dog
+
 }
 
