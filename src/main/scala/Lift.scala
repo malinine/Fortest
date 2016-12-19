@@ -3,9 +3,10 @@ package Lift
 
 import net.liftweb.json._
 import net.liftweb.json.JsonDSL._
-import net.liftweb.json.JsonAST.JValue
+import net.liftweb.json.JsonAST.{JField, JObject, JValue}
 import net.liftweb.json.Serialization.{read, write}
 import net.liftweb.json
+
 
 /**
   * Created by malinee on 1/12/2559.
@@ -54,8 +55,10 @@ object Lift extends App {
 
   println("##### Extract nested class #####")
   case class Address(street: String, city: String)
-  case class Child(name: String, age: Int, birthdate: Option[java.time.Instant])
+  case class Child(name: String, age: Int, birthdate: Option[java.util.Date])
   case class SimplePerson(name: String, address: Address,children: List[Child])
+
+
 
 
   val testJson =parse("""
@@ -88,6 +91,39 @@ object Lift extends App {
   println("##### UnFlatten JSON #####")
   println(Extraction.unflatten( Extraction.flatten(testJson)))
 
+
+  val atrtes = parse(
+    """
+      |{
+      |  "quantity":200,
+      |  "point":2,
+      |  "description":"Blue Shrit for bbbb",
+      |  "price":12250,
+      |  "user_id":"",
+      |  "_id":{
+      |    "$uuid":"b81788d9-2c98-4939-a85b-498e2c1edc34"
+      |  },
+      |  "shop_id":"12345980",
+      |  "category_id":"149",
+      |  "created_at":"Thu, 15 Dec 2016 09:39:18 GMT",
+      |  "publish_status":"1",
+      |  "title":"Blue Shritxx",
+      |  "updated_at":"Thu, 15 Dec 2016 09:39:18 GMT"
+      |}
+    """.stripMargin)
+
+
+  println(atrtes)
+ val s = atrtes transform {
+    case JField("_id",JObject(List(JField("$uuid",JString(x))))) => JField("id",JString(x))
+  }
+
+  val k = s map {
+    case JField("user_id",JString(x)) => List("dddddd")
+    case _ => List("sdasd")
+  }
+
+  println(parse("dadadaadad").extract[List[String]])
 
 }
 
