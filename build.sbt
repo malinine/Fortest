@@ -55,4 +55,8 @@ libraryDependencies ++= Seq(
 "io.circe" %% "circe-optics"
 ).map(_ % circeVersion)
 
+resolvers += Resolver.sonatypeRepo("releases")
+addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+
+
 scalacOptions in Test ++= Seq("-Yrangepos")

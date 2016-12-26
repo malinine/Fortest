@@ -95,14 +95,23 @@ object Hierachy extends App {
   sealed trait Animal
   case class Dog(name: String) extends Animal
   case class Fish(weight: Double) extends Animal
-  case class Animals(animals: List[Animal])
+ // case class Animals(animals: List[Animal])
 
-//  val animals =  Animals(List(Fish(2.2),Dog("bobby")))
-//  println(animals.asJson)
+  //val animals =  Animals(List(Fish(2.2),Dog("bobby")))
+  //val animals =Animals(Dog("444"))
+    //println(animals.asJson)
   val dog = Dog("pluto")
-  println(dog)
-  decode[Animal](dog.asJson.toString())
-  dog
+  println(dog.asJson)
+
+  val dogStr = """
+    {
+      "Dog" : {
+        "name" : "444"
+      }
+    }
+    """
+  println(decode[Animal](dogStr))
+
 
 }
 
