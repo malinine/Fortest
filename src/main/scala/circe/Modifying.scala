@@ -29,15 +29,8 @@ object Modifying extends App {
   """
 
   val doc = parse(rawJson).getOrElse(Json.Null)
-  val cursor  = doc.cursor
-  val reversedNameCursor = cursor.downField("namepp")
+  val cursor  = doc.hcursor
+  val reversedNameCursor =  cursor.downField("name").withFocus(_.mapString(_.reverse))
   println(reversedNameCursor.top)
-  println(reversedNameCursor.history)
-
-
-
-
-
-
 
 }

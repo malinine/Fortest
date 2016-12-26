@@ -10,7 +10,6 @@ import io.circe.generic.semiauto._
 
 object Polymorphic extends App {
 
-  import io.circe.generic.auto._
 
   sealed trait Animal
   case class Dog(name: String) extends Animal

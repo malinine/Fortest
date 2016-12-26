@@ -46,6 +46,7 @@ object Traversing extends App{
 
   val json = parse(rawJson).right.get
 
-
+  val listage = cursor.downField("children").focus.flatMap(_.asArray).get.flatMap(_.cursor.get[Int]("age").toOption)
+  println(listage)
 
 }
