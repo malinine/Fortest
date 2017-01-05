@@ -39,8 +39,8 @@ libraryDependencies ++= {
     "org.julienrf" %% "play-json-derived-codecs" % "3.3",
     "io.leonard" %% "play-json-traits" % "1.0.1",
     "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-    "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.1"
-
+    "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.1",
+    "io.argonaut" %% "argonaut" % "6.1"
   )
 }
 

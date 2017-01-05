@@ -2,11 +2,9 @@ package circe
 
 import io.circe.parser._
 import io.circe._
+import io.circe.generic.JsonCodec
 import io.circe.generic.semiauto._
-
-/*
-  serializing polymorphic.
-*/
+import io.circe.generic.auto._
 
 object Polymorphic extends App {
 

@@ -14,8 +14,6 @@ object Encoding extends App {
   //val dec = decode[List[Int]]("[1, 2, 3]")
   println(dec)
 
-
-
 }
 
 object SemiAutomatic extends App {

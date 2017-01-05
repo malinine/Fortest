@@ -3,9 +3,6 @@ package circe
 import io.circe.{Decoder, Encoder}
 import io.circe.parser._
 
-/*
-  serializing polymorphic list.
-*/
 
 object PolymorphicLists extends App {
 

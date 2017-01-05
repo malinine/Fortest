@@ -184,7 +184,9 @@ object Hierachy extends App {
 
 
   val AnimalObj = Dog("pluto")
-  println(Json.toJson(AnimalObj))
+  println(AnimalObj)
+  val animalObjJson = Json.toJson(AnimalObj)
+  println(animalObjJson)
   println(Json.toJson(AnimalObj).as[Animal])
 
 }

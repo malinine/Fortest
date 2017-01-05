@@ -4,9 +4,9 @@ import spray.json._
 import fommil.sjs.FamilyFormats._
 import net.liftweb.json.Serialization._
 import net.liftweb.json._
-/**
-  * Created by malinee on 1/12/2559.
-  */
+
+
+
 case class MyPerson(firstName: String, lastName: String, age: Int)
 
 object Spray extends App {
@@ -45,7 +45,6 @@ object Spray extends App {
   println(fruitsAST.asJsObject.getFields("fruits"))
   println(fruitsAST.asJsObject.getFields("name"))
 
-  //fruitsAST \ ""
 
 
 
