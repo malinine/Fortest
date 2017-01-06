@@ -55,9 +55,12 @@ object Traversing extends App{
 
   //=== Modifying JSON ===//
 
-  println(cursor.downField("children").focus.flatMap(_.asArray).get.flatMap(_.cursor.get[Int]("age").toOption))
 //  val reversedNameCursor =  cursor.downField("name").withFocus(_.mapString(_.reverse))
 //  println(reversedNameCursor.top)
+//
+//  // List of age.
+//  val ageList = cursor.downField("children").focus.flatMap(_.asArray).get.flatMap(_.cursor.get[Int]("age").toOption).map(_ * 2)
+//  println(ageList)
 //
 //  // Delete the focus
 //  val delete = cursor.downField("address").delete.focus

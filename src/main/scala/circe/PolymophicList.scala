@@ -37,6 +37,9 @@ object PolymorphicLists extends App {
   val animalList = decode[Animals](rawJson)
   println(animalList)
 
+//  val fish = Fish(4.5)
+//  fish.
+
 
 }
 
