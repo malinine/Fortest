@@ -35,11 +35,6 @@ object PolymorphicLists extends App {
   implicit val animalEncoder: Encoder[Animal] = deriveEncoder
 
   val animalList = decode[Animals](rawJson)
-  println(animalList)
-
-//  val fish = Fish(4.5)
-//  fish.
-
 
 }
 

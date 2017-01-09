@@ -45,8 +45,41 @@ object Spray extends App {
   println(fruitsAST.asJsObject.getFields("fruits"))
   println(fruitsAST.asJsObject.getFields("name"))
 
+}
+
+object HierachySpray extends App {
+
+  case class Address(street: String, city: String)
+  case class Child(name: String, age: Int)
+  case class SimplePerson(name: String, address: Address, children: List[Child])
+
+  val testJson = """
+  { "name": "joe",
+    "address": {
+      "street": "Bulevard",
+      "city": "Helsinki"
+    },
+    "children": [
+      {
+        "name": "Mary",
+        "age": 5
+      },
+      {
+        "name": "Mazy",
+        "age": 3
+      }
+    ]
+  }"""
+
+
+  val decode = testJson.parseJson.convertTo[SimplePerson]
+  println(decode)
+ // val person = SimplePerson("MaLi",Address("Asok","BKK"),List(Child("Minguk",4)))
+ // println(person.toJson.prettyPrint)
+
+
+
 
 
 
 }
-

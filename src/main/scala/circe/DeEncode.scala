@@ -6,13 +6,8 @@ import io.circe.parser.decode
 
 object Encoding extends App {
 
-
   val enc = List(1, 2, 3).asJson
-  println(enc)
-
   val dec = enc.as[List[Int]]
-  //val dec = decode[List[Int]]("[1, 2, 3]")
-  println(dec)
 
 }
 
@@ -27,10 +22,6 @@ object SemiAutomatic extends App {
   implicit val myPersonEncoder: Encoder[MyPerson] = deriveEncoder
 
   val myPerson = decode[MyPerson](rawJson)
-  println(myPerson)
-
-  val json = myPerson.right.get.asJson
-  println(json)
 
 }
 
@@ -42,7 +33,6 @@ object JsonCodec extends App {
   val rawJson: String = """{"firstName":"Leonard ","lastName":"Nimoy","age":81}"""
 
   val myPerson = decode[MyPerson](rawJson)
-  println(myPerson)
 
 }
 
@@ -54,6 +44,5 @@ object FullyAutomatic extends App {
   val rawJson: String = """{"firstName":"Leonard ","lastName":"Nimoy","age":81}"""
 
   val myPerson = decode[MyPerson](rawJson)
-  println(myPerson)
 
 }

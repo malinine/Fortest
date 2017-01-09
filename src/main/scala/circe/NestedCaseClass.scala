@@ -41,6 +41,5 @@ object NestedCaseClass extends App {
   implicit val decodeInstant: Decoder[Instant] = Decoder.decodeString.emap { str => Either.catchNonFatal(Instant.parse(str)).leftMap(t => "Instant") }
 
   val person = decode[SimplePerson](rawJson)
-  println(person)
 
 }
